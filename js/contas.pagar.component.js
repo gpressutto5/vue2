@@ -1,4 +1,4 @@
-window.appComponent = Vue.extend({
+window.contasPagarComponent = Vue.extend({
     components: {
         'menu-component': menuComponent
     },

@@ -1,8 +1,8 @@
 window.mainComponent = Vue.extend({
     components: {
-        "app-component": appComponent
+        "contas-pagar-component": contasPagarComponent
     },
-    template: "<app-component :contas='contas'></app-component>",
+    template: "<contas-pagar-component></contas-pagar-component>",
     data: function(){
         return {
             contas: [

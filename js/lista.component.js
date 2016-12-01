@@ -27,7 +27,7 @@ window.listaComponent = Vue.extend({
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#" @click.prevent="carregarConta(conta)"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</a></li>
+                            <li><router-link :to="{name: 'update', params: {index: index}}"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
                             <li><a href="#" @click.prevent="pagarConta(conta)"><i class="fa fa-fw fa-money" aria-hidden="true"></i> {{ conta.pago ? 'Não foi pago':'Pagar' }}</a></li>
                             <li><a href="#" @click.prevent="removerConta(index,conta)"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Remover</a></li>
                         </ul>
@@ -39,36 +39,18 @@ window.listaComponent = Vue.extend({
 </div>
     `,
     data: function(){
-        return{
-            contas: [
-                {vencimento: '20/12/2016', nome: 'Conta de Luz', valor: 153.47, pago: 1},
-                {vencimento: '21/12/2016', nome: 'Conta de Água', valor: 84.32, pago: 0},
-                {vencimento: '22/12/2016', nome: 'Conta de Telefone', valor: 174.87, pago: 0},
-                {vencimento: '23/12/2016', nome: 'Supermercado', valor: 354.12, pago: 0},
-                {vencimento: '24/12/2016', nome: 'Cartão de Crédito', valor: 1874.21, pago: 0},
-                {vencimento: '25/12/2016', nome: 'Gasolina', valor: 354.11, pago: 0},
-                {vencimento: '26/12/2016', nome: 'Aluguel', valor: 1300, pago: 0}
-            ]
-        };
-    },
-    methods: {
-        carregarConta: function(conta){
-            this.$dispatch('change-conta', conta);
-            this.$dispatch('change-activatedview', 1);
-            this.$dispatch('change-formtype', 'update');
-        },
-        pagarConta: function(conta){
-            conta.pago = !conta.pago;
-        },
-        removerConta: function(conta){
-            if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
-                this.contas.$remove(conta);
-            }
+        return {
+            contas: this.$root.$children[0].contas
         }
     },
-    events: {
-        'nova-conta': function (conta) {
-            this.contas.push(conta);
+    methods: {
+        pagarConta: function (conta) {
+            conta.pago = !conta.pago;
+        },
+        removerConta: function (index, conta) {
+            if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
+                this.contas.splice(index, 1);
+            }
         }
     }
 });

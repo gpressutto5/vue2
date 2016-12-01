@@ -1,17 +1,16 @@
 window.menuComponent = Vue.extend({
     template: `
 <ul class="nav nav-tabs">
-    <router-link v-for="link in menus" tag="li" to="link.url">
+    <router-link v-for="link in menus" tag="li" :to="{name: link.name}" active-class="active">
         <a>{{ link.nome }}</a>
     </router-link>
 </ul>
 `,
-    props: ['activated-view'],
     data: function(){
         return {
             menus: [
-                {id: 0, nome: "Listar contas", url: "/contas"},
-                {id: 1, nome: "Criar conta", url: "/conta/criar"}
+                {id: 0, nome: "Listar contas", name: "lista"},
+                {id: 1, nome: "Criar conta",   name: "form"}
             ]
         };
     },
@@ -26,10 +25,10 @@ window.menuComponent = Vue.extend({
                     pago: 0
                 };
             }*/
-            this.$dispatch('change-activatedview', opcao);
+            //this.$dispatch('change-activatedview', opcao);
             if (opcao == 1) {
                 // this.$parent.formType = 'insert';
-                this.$dispatch('change-formtype', 'insert');
+                //this.$dispatch('change-formtype', 'insert');
             }
         }
     }

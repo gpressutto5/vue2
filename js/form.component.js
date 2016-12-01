@@ -31,7 +31,7 @@ window.formComponent = Vue.extend({
 `,
     data: function () {
         return {
-            formType: 'insert',
+            formType: "insert",
             conta: {
                 vencimento: '',
                 nome: '',
@@ -40,28 +40,20 @@ window.formComponent = Vue.extend({
             }
         }
     },
-    methods: {
-        cadastrar: function(){
-            if (this.formType == 'insert') {
-                //this.$parent.$children[1].contas.push(this.conta);
-                this.$dispatch('nova-conta', this.conta);
-            }
-            this.$dispatch('change-activatedview', 0);
-            this.$dispatch('change-conta', opcao);
-            this.conta = {
-                vencimento: '',
-                nome: '',
-                valor: 0,
-                pago: 0
-            };
+    created: function(){
+        if (this.$route.name == "update") {
+            this.getBill(this.$route.params.index);
+            this.formType = "update";
         }
     },
-    events: {
-        'change-formtype': function (formtype) {
-            this.formType = formtype;
+    methods: {
+        cadastrar: function(){
+            if (this.formType == "insert")
+                this.$root.$children[0].contas.push(this.conta);
+            this.$router.push({name: "lista"});
         },
-        'change-conta': function (conta) {
-            this.conta = conta;
+        getBill: function (index) {
+            this.conta = this.$root.$children[0].contas[index];
         }
     }
 });

@@ -1,4 +1,4 @@
-window.listaComponent = Vue.extend({
+window.listaPagarComponent = Vue.extend({
     template: `
 <div>
     <h3 v-show="!contas.length" class="text-info text-center">Não há contas</h3>
@@ -40,7 +40,7 @@ window.listaComponent = Vue.extend({
     `,
     data: function(){
         return {
-            contas: this.$root.$children[0].contas
+            contas: this.$root.$children[0].contasPagar
         }
     },
     methods: {

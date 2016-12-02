@@ -1,20 +1,9 @@
 window.contasPagarComponent = Vue.extend({
     components: {
-        'menu-component': menuComponent
+        'menu-component': menuPagarComponent
     },
     template: `
 <div>
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="navbar-brand">
-                        Contas
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
     <div class="container" v-cloak>
         <div class="row">
             <div class="col-md-12 text-center">
@@ -48,8 +37,8 @@ window.contasPagarComponent = Vue.extend({
         status: function(){
             var count = 0;
             var lista = this.$root.$children[0];
-            for(var i in lista.contas){
-                if (!lista.contas[i].pago) {
+            for(var i in lista.contasPagar){
+                if (!lista.contasPagar[i].pago) {
                     count++;
                 }
             }

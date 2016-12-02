@@ -1,4 +1,4 @@
-window.menuComponent = Vue.extend({
+window.menuPagarComponent = Vue.extend({
     template: `
 <ul class="nav nav-tabs">
     <router-link v-for="link in menus" tag="li" :to="{name: link.name}" active-class="active">

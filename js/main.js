@@ -1,11 +1,11 @@
 window.mainComponent = Vue.extend({
     components: {
-        "contas-pagar-component": contasPagarComponent
+        "contas-component": contasComponent
     },
-    template: "<contas-pagar-component></contas-pagar-component>",
+    template: "<contas-component></contas-component>",
     data: function(){
         return {
-            contas: [
+            contasPagar: [
                 {vencimento: '20/12/2016', nome: 'Conta de Luz', valor: 153.47, pago: 1},
                 {vencimento: '21/12/2016', nome: 'Conta de Água', valor: 84.32, pago: 0},
                 {vencimento: '22/12/2016', nome: 'Conta de Telefone', valor: 174.87, pago: 0},
@@ -20,9 +20,22 @@ window.mainComponent = Vue.extend({
 
 var router = new VueRouter({
     routes: [
-        { path: '/list',        name: 'lista',   component: listaComponent },
-        { path: '/form',        name: 'form',    component: formComponent },
-        { path: '/form/:index', name: 'update',  component: formComponent },
+        { path: '/pagar',       name: 'pagar',   component: contasPagarComponent,
+            children: [
+                { path: 'list',        name: 'lista',   component: listaPagarComponent },
+                { path: 'form',        name: 'form',    component: formPagarComponent },
+                { path: 'form/:index', name: 'update',  component: formPagarComponent },
+                { path: '/',            redirect: { name: 'lista' } }
+            ]
+        },
+        { path: '/receber',       name: 'receber',   component: contasPagarComponent,
+            children: [
+                { path: 'list',        name: 'lista',   component: listaPagarComponent },
+                { path: 'form',        name: 'form',    component: formPagarComponent },
+                { path: 'form/:index', name: 'update',  component: formPagarComponent },
+                { path: '/',            redirect: { name: 'lista' } }
+            ]
+        },
         { path: '*',            redirect: { name: 'lista' } }
     ]
 });

@@ -41,7 +41,7 @@ window.formReceberComponent = Vue.extend({
         }
     },
     created: function(){
-        if (this.$route.name == "update") {
+        if (this.$route.name == "updateR") {
             this.getConta(this.$route.params.index);
             this.formType = "update";
         }

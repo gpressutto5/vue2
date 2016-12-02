@@ -1,4 +1,4 @@
-window.formPagarComponent = Vue.extend({
+window.formReceberComponent = Vue.extend({
     template: `
 <form  class="form-horizontal" @submit.prevent="cadastrar">
     <div class="form-group">
@@ -42,18 +42,18 @@ window.formPagarComponent = Vue.extend({
     },
     created: function(){
         if (this.$route.name == "update") {
-            this.getBill(this.$route.params.index);
+            this.getConta(this.$route.params.index);
             this.formType = "update";
         }
     },
     methods: {
         cadastrar: function(){
             if (this.formType == "insert")
-                this.$root.$children[0].contasPagar.push(this.conta);
-            this.$router.push({name: "lista"});
+                this.$root.$children[0].contasReceber.push(this.conta);
+            this.$router.push({name: "listaR"});
         },
-        getBill: function (index) {
-            this.conta = this.$root.$children[0].contasPagar[index];
+        getConta: function (index) {
+            this.conta = this.$root.$children[0].contasReceber[index];
         }
     }
 });

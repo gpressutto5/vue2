@@ -13,6 +13,11 @@ window.mainComponent = Vue.extend({
                 {vencimento: '24/12/2016', nome: 'Cartão de Crédito', valor: 1874.21, pago: 0},
                 {vencimento: '25/12/2016', nome: 'Gasolina', valor: 354.11, pago: 0},
                 {vencimento: '26/12/2016', nome: 'Aluguel', valor: 1300, pago: 0}
+            ],
+            contasReceber: [
+                {vencimento: '20/12/2016', nome: 'Salário', valor: 7265.47, pago: 0},
+                {vencimento: '21/12/2016', nome: 'Aluguel', valor: 800.00, pago: 1},
+                {vencimento: '22/12/2016', nome: 'Venda', valor: 174.87, pago: 0}
             ]
         };
     }
@@ -28,12 +33,12 @@ var router = new VueRouter({
                 { path: '/',            redirect: { name: 'lista' } }
             ]
         },
-        { path: '/receber',       name: 'receber',   component: contasPagarComponent,
+        { path: '/receber',       name: 'receber',   component: contasReceberComponent,
             children: [
-                { path: 'list',        name: 'lista',   component: listaPagarComponent },
-                { path: 'form',        name: 'form',    component: formPagarComponent },
-                { path: 'form/:index', name: 'update',  component: formPagarComponent },
-                { path: '/',            redirect: { name: 'lista' } }
+                { path: 'list',        name: 'listaR',   component: listaReceberComponent },
+                { path: 'form',        name: 'formR',    component: formReceberComponent },
+                { path: 'form/:index', name: 'updateR',  component: formReceberComponent },
+                { path: '/',            redirect: { name: 'listaR' } }
             ]
         },
         { path: '*',            redirect: { name: 'lista' } }

@@ -23,6 +23,7 @@ window.contasComponent = Vue.extend({
     data: function(){
         return {
             menus: [
+                {nome: "Dashboard",          name: "dashboard"},
                 {nome: "Contas a pagar",     name: "pagar"},
                 {nome: "Contas a receber",   name: "receber"}
             ]

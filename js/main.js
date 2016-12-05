@@ -41,6 +41,7 @@ var router = new VueRouter({
                 { path: '/',            redirect: { name: 'listaR' } }
             ]
         },
+        { path: '/dashboard',     name: 'dashboard', component: dashboardComponent, },
         { path: '*',            redirect: { name: 'lista' } }
     ]
 });

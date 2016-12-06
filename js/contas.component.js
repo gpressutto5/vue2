@@ -9,7 +9,7 @@ window.contasComponent = Vue.extend({
                         Contas
                     </div>
                     <ul class="nav navbar-nav navbar-right">
-                        <router-link v-for="link in menus" tag="li" :to="{name: link.name}" active-class="active">
+                        <router-link v-for="link in menus" tag="li" :to="{path: link.path}" active-class="active">
                             <a>{{ link.nome }}</a>
                         </router-link>
                     </ul>
@@ -23,9 +23,9 @@ window.contasComponent = Vue.extend({
     data: function(){
         return {
             menus: [
-                {nome: "Dashboard",          name: "dashboard"},
-                {nome: "Contas a pagar",     name: "pagar"},
-                {nome: "Contas a receber",   name: "receber"}
+                {nome: "Dashboard",          path: "/dashboard"},
+                {nome: "Contas a pagar",     path: "/pagar"},
+                {nome: "Contas a receber",   path: "/receber"}
             ]
         };
     }

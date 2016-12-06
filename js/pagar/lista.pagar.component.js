@@ -2,7 +2,6 @@ window.listaPagarComponent = Vue.extend({
     template: `
 <div>
     <h3 v-show="!contas.length" class="text-info text-center">Não há contas</h3>
-    <p>{{ teste }}</p>
     <table class="table table-hover" v-show="contas.length">
         <thead>
             <tr>
@@ -41,29 +40,13 @@ window.listaPagarComponent = Vue.extend({
     `,
     data: function(){
         return {
-            contas: [],
-            teste: ''
-        }
+            contas: []
+        };
     },
-    created: function () {
+    beforeMount: function() {
         axios.get('http://127.0.0.1/api/bills')
-            .then(function (response) {
-                //this.contas = response.data;
-                //this.teste = response.toString();
-                listaPagarComponent.contas = [{
-                    nome: "Teste",
-                    valor: 14,
-                    pago: 0,
-                    vencimento: "oloco"
-                },{
-                    nome: "Teste",
-                    valor: 14,
-                    pago: 0,
-                    vencimento: "oloco"
-                }];
-            })
-            .catch(function (error) {
-                console.log(error);
+            .then((response) => {
+                 this.contas = response.data;
             });
     },
     methods: {

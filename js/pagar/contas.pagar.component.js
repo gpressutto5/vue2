@@ -47,8 +47,5 @@ window.contasPagarComponent = Vue.extend({
                     this.calcularStatus(response.data);
                 });
         }
-    },
-    created: function () {
-        this.updateStatus();
     }
 });

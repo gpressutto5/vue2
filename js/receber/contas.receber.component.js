@@ -47,8 +47,5 @@ window.contasReceberComponent = Vue.extend({
                     this.calcularStatus(response.data);
                 });
         }
-    },
-    created: function () {
-        this.updateStatus();
     }
 });

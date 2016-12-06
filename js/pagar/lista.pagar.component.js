@@ -48,15 +48,20 @@ window.listaPagarComponent = Vue.extend({
             .then((response) => {
                  this.contas = response.data;
             });
+        this.$parent.updateStatus();
     },
     methods: {
         pagarConta: function (conta) {
-            conta.pago = !conta.pago;
+            instance.put('pagar/'+conta.id).then((response) => {
+                conta.pago = !conta.pago;
+                this.$parent.updateStatus();
+            });
         },
         removerConta: function (index, conta) {
             if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
                 instance.delete('contasP/'+conta.id).then((response) => {
                     this.contas.splice(index, 1);
+                    this.$parent.updateStatus();
                 });
             }
         }

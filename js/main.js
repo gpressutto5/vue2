@@ -1,3 +1,9 @@
+var instance = axios.create({
+    baseURL: 'http://127.0.0.1/api/',
+    timeout: 1000,
+    headers: {'X-Custom-Header': 'foobar'}
+});
+
 window.mainComponent = Vue.extend({
     components: {
         "contas-component": contasComponent

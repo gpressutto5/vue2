@@ -25,24 +25,30 @@ window.contasReceberComponent = Vue.extend({
     data: function() {
         return {
             titulo: "Contas a receber",
-            conta: {
-                vencimento: '',
-                nome: '',
-                valor: 0,
-                pago: 0
-            },
+            status: ""
         };
     },
-    computed: {
-        status: function(){
+    methods: {
+        calcularStatus: function (contas) {
+            if (!contas.length){
+                status = "Nenhuma conta a pagar.";
+            }
             var count = 0;
-            var lista = this.$root.$children[0];
-            for(var i in lista.contasReceber){
-                if (!lista.contasReceber[i].pago) {
+            for(var i in contas){
+                if (!contas[i].pago) {
                     count++;
                 }
             }
-            return !count ? "Nenhuma conta a receber." : "Existem " + count + " contas a receber.";
+            this.status = !count ? "Nenhuma conta a receber." : "Existem " + count + " contas a receber.";
+        },
+        updateStatus: function () {
+            instance.get('contasR')
+                .then((response) => {
+                    this.calcularStatus(response.data);
+                });
         }
+    },
+    created: function () {
+        this.updateStatus();
     }
 });

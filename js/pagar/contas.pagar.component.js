@@ -25,24 +25,30 @@ window.contasPagarComponent = Vue.extend({
     data: function() {
         return {
             titulo: "Contas a pagar",
-            conta: {
-                vencimento: '',
-                nome: '',
-                valor: 0,
-                pago: 0
-            },
+            status: ""
         };
     },
-    computed: {
-        status: function(){
+    methods: {
+        calcularStatus: function (contas) {
+            if (!contas.length){
+                status = "Nenhuma conta a pagar.";
+            }
             var count = 0;
-            var lista = this.$root.$children[0];
-            for(var i in lista.contasPagar){
-                if (!lista.contasPagar[i].pago) {
+            for(var i in contas){
+                if (!contas[i].pago) {
                     count++;
                 }
             }
-            return !count ? "Nenhuma conta a pagar." : "Existem " + count + " contas a pagar.";
+            this.status = !count ? "Nenhuma conta a pagar." : "Existem " + count + " contas a pagar.";
+        },
+        updateStatus: function () {
+            instance.get('contasP')
+                .then((response) => {
+                    this.calcularStatus(response.data);
+                });
         }
+    },
+    created: function () {
+        this.updateStatus();
     }
 });

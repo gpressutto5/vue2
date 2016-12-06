@@ -42,18 +42,27 @@ window.formPagarComponent = Vue.extend({
     },
     created: function(){
         if (this.$route.name == "update") {
-            this.getConta(this.$route.params.index);
+            this.getConta(this.$route.params.id);
             this.formType = "update";
         }
     },
     methods: {
         cadastrar: function(){
-            if (this.formType == "insert")
-                this.$root.$children[0].contasPagar.push(this.conta);
-            this.$router.push({name: "lista"});
+            if (this.formType == "insert"){
+                instance.post('contasP', this.conta).then((response) => {
+                    this.$router.push({name: "lista"});
+                });
+            } else {
+                instance.put('contasP/'+this.conta.id, this.conta).then((response) => {
+                    this.$router.push({name: "lista"});
+                });
+            }
         },
-        getConta: function (index) {
-            this.conta = this.$root.$children[0].contasPagar[index];
+        getConta: function (id) {
+            instance.get('contasP/'+id)
+                .then((response) => {
+                    this.conta = response.data;
+                });
         }
     }
 });

@@ -27,9 +27,9 @@ window.listaReceberComponent = Vue.extend({
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><router-link :to="{name: 'updateR', params: {index: index}}"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
+                            <li><router-link :to="{name: 'updateR', params: {id: conta.id}}"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
                             <li><a href="#" @click.prevent="pagarConta(conta)"><i class="fa fa-fw fa-money" aria-hidden="true"></i> {{ conta.pago ? 'Não foi pago':'Pagar' }}</a></li>
-                            <li><a href="#" @click.prevent="removerConta(index,conta)"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Remover</a></li>
+                            <li><a href="#" @click.prevent="removerConta(index, conta)"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Remover</a></li>
                         </ul>
                     </div>
                 </td>
@@ -40,8 +40,14 @@ window.listaReceberComponent = Vue.extend({
     `,
     data: function(){
         return {
-            contas: this.$root.$children[0].contasReceber
+            contas: []
         }
+    },
+    beforeMount: function() {
+        instance.get('contasR')
+            .then((response) => {
+                this.contas = response.data;
+            });
     },
     methods: {
         pagarConta: function (conta) {
@@ -49,7 +55,9 @@ window.listaReceberComponent = Vue.extend({
         },
         removerConta: function (index, conta) {
             if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
-                this.contas.splice(index, 1);
+                instance.delete('contasR/'+conta.id).then((response) => {
+                    this.contas.splice(index, 1);
+                });
             }
         }
     }

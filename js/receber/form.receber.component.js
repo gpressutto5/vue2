@@ -42,18 +42,27 @@ window.formReceberComponent = Vue.extend({
     },
     created: function(){
         if (this.$route.name == "updateR") {
-            this.getConta(this.$route.params.index);
+            this.getConta(this.$route.params.id);
             this.formType = "update";
         }
     },
     methods: {
         cadastrar: function(){
-            if (this.formType == "insert")
-                this.$root.$children[0].contasReceber.push(this.conta);
-            this.$router.push({name: "listaR"});
+            if (this.formType == "insert"){
+                instance.post('contasR', this.conta).then((response) => {
+                    this.$router.push({name: "listaR"});
+                });
+            } else {
+                instance.put('contasR/'+this.conta.id, this.conta).then((response) => {
+                    this.$router.push({name: "listaR"});
+                });
+            }
         },
-        getConta: function (index) {
-            this.conta = this.$root.$children[0].contasReceber[index];
+        getConta: function (id) {
+            instance.get('contasR/'+id)
+                .then((response) => {
+                    this.conta = response.data;
+                });
         }
     }
 });

@@ -23,19 +23,32 @@ window.dashboardComponent = Vue.extend({
     data: function() {
         return {
             titulo: "Dashboard",
-            conta: {
-                vencimento: '',
-                nome: '',
-                valor: 0,
-                pago: 0
-            },
+            total: 0,
+            lista: {
+                contasReceber: [],
+                contasPagar: []
+            }
         };
+    },
+    beforeMount: function() {
+        instance.get('contas/total')
+            .then((response) => {
+                this.total = response.data.total;
+            });
+        instance.get('contasP')
+            .then((response) => {
+                this.lista.contasPagar = response.data;
+            });
+        instance.get('contasR')
+            .then((response) => {
+                this.lista.contasReceber = response.data;
+            });
     },
     computed: {
         status: function(){
-            var countP = 0;
-            var countR = 0;
-            var lista = this.$root.$children[0];
+            countP = 0;
+            countR = 0;
+            var lista = this.lista;
             for(var i in lista.contasReceber){
                 if (!lista.contasReceber[i].pago) {
                     countR++;
@@ -47,22 +60,11 @@ window.dashboardComponent = Vue.extend({
                 }
             }
             var strreturn = !countR ? "Nenhuma conta a receber e " : "Existem " + countR + " contas a receber e ";
-            strreturn += !countR ? "nenhuma conta a pagar." : countP + " contas a pagar.";
+            strreturn += !countP ? "nenhuma conta a pagar." : countP + " contas a pagar.";
             return strreturn;
         },
         saldo: function () {
-            var saldo = 0;
-            var lista = this.$root.$children[0];
-            for(var i in lista.contasReceber){
-                if (!lista.contasReceber[i].pago) {
-                    saldo += lista.contasReceber[i].valor;
-                }
-            }
-            for(var i in lista.contasPagar){
-                if (!lista.contasPagar[i].pago) {
-                    saldo -= lista.contasPagar[i].valor;
-                }
-            }
+            var saldo = this.total;
             if (saldo > 0){
                 return "Você está no lucro! Vai receber R$ " + saldo.toFixed(2) +"!";
             }else if (saldo < 0){

@@ -1,9 +1,9 @@
-var instance = axios.create({
+let instance = axios.create({
     baseURL: 'http://127.0.0.1/api/',
     timeout: 1000
 });
 
-var router = new VueRouter({
+let router = new VueRouter({
     routes: [
         { path: '/pagar',   component: contasPagarComponent,
             children: [

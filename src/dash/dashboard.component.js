@@ -46,25 +46,25 @@ window.dashboardComponent = Vue.extend({
     },
     computed: {
         status: function(){
-            countP = 0;
-            countR = 0;
-            var lista = this.lista;
-            for(var i in lista.contasReceber){
+            let countP = 0;
+            let countR = 0;
+            let lista = this.lista;
+            for(let i in lista.contasReceber){
                 if (!lista.contasReceber[i].pago) {
                     countR++;
                 }
             }
-            for(var i in lista.contasPagar){
+            for(let i in lista.contasPagar){
                 if (!lista.contasPagar[i].pago) {
                     countP++;
                 }
             }
-            var strreturn = !countR ? "Nenhuma conta a receber e " : "Existem " + countR + " contas a receber e ";
+            let strreturn = !countR ? "Nenhuma conta a receber e " : "Existem " + countR + " contas a receber e ";
             strreturn += !countP ? "nenhuma conta a pagar." : countP + " contas a pagar.";
             return strreturn;
         },
         saldo: function () {
-            var saldo = this.total;
+            let saldo = this.total;
             if (saldo > 0){
                 return "Você está no lucro! Vai receber R$ " + saldo.toFixed(2) +"!";
             }else if (saldo < 0){

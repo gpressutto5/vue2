@@ -33,8 +33,8 @@ window.contasPagarComponent = Vue.extend({
             if (!contas.length){
                 status = "Nenhuma conta a pagar.";
             }
-            var count = 0;
-            for(var i in contas){
+            let count = 0;
+            for(let i in contas){
                 if (!contas[i].pago) {
                     count++;
                 }

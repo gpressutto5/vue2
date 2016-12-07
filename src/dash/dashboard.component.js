@@ -20,7 +20,7 @@ window.dashboardComponent = Vue.extend({
     </div>
 </div>
     `,
-    data: function() {
+    data() {
         return {
             titulo: "Dashboard",
             total: 0,
@@ -30,7 +30,7 @@ window.dashboardComponent = Vue.extend({
             }
         };
     },
-    beforeMount: function() {
+    beforeMount() {
         instance.get('contas/total')
             .then((response) => {
                 this.total = response.data.total;
@@ -45,7 +45,7 @@ window.dashboardComponent = Vue.extend({
             });
     },
     computed: {
-        status: function(){
+        status(){
             let countP = 0;
             let countR = 0;
             let lista = this.lista;
@@ -63,7 +63,7 @@ window.dashboardComponent = Vue.extend({
             strreturn += !countP ? "nenhuma conta a pagar." : countP + " contas a pagar.";
             return strreturn;
         },
-        saldo: function () {
+        saldo() {
             let saldo = this.total;
             if (saldo > 0){
                 return "Você está no lucro! Vai receber R$ " + saldo.toFixed(2) +"!";

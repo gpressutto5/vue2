@@ -18,7 +18,7 @@ window.listaPagarComponent = Vue.extend({
                 <td>{{ index + 1 }}</td>
                 <td>{{ conta.vencimento }}</td>
                 <td>{{ conta.nome }}</td>
-                <td>{{ 'R$ ' + conta.valor.toFixed(2) }}</td>
+                <td>{{ conta.valor | numero }}</td>
                 <td><span class="label" :class="{ 'label-success': conta.pago, 'label-danger': !conta.pago }">{{ conta.pago | status }}</span></td>
                 <td>
                     <div class="dropdown">
@@ -38,12 +38,12 @@ window.listaPagarComponent = Vue.extend({
     </table>
 </div>
     `,
-    data: function(){
+    data(){
         return {
             contas: []
         };
     },
-    beforeMount: function() {
+    beforeMount() {
         instance.get('contasP')
             .then((response) => {
                  this.contas = response.data;
@@ -51,13 +51,13 @@ window.listaPagarComponent = Vue.extend({
         this.$parent.updateStatus();
     },
     methods: {
-        pagarConta: function (conta) {
+        pagarConta(conta) {
             instance.put('pagar/'+conta.id).then((response) => {
                 conta.pago = !conta.pago;
                 this.$parent.updateStatus();
             });
         },
-        removerConta: function (index, conta) {
+        removerConta(index, conta) {
             if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
                 instance.delete('contasP/'+conta.id).then((response) => {
                     this.contas.splice(index, 1);

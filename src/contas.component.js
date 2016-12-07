@@ -20,7 +20,7 @@ window.contasComponent = Vue.extend({
     <router-view></router-view>
 </div>
 `,
-    data: function(){
+    data(){
         return {
             menus: [
                 {nome: "Dashboard",          path: "/dashboard"},

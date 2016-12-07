@@ -22,14 +22,14 @@ window.contasReceberComponent = Vue.extend({
     </div>
 </div>
     `,
-    data: function() {
+    data() {
         return {
             titulo: "Contas a receber",
             status: ""
         };
     },
     methods: {
-        calcularStatus: function (contas) {
+        calcularStatus(contas) {
             if (!contas.length){
                 status = "Nenhuma conta a pagar.";
             }
@@ -41,7 +41,7 @@ window.contasReceberComponent = Vue.extend({
             }
             this.status = !count ? "Nenhuma conta a receber." : "Existem " + count + " contas a receber.";
         },
-        updateStatus: function () {
+        updateStatus() {
             instance.get('contasR')
                 .then((response) => {
                     this.calcularStatus(response.data);

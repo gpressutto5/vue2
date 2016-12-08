@@ -1,19 +1,21 @@
 window.contasComponent = Vue.extend({
     template: `
 <div>
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="navbar-brand">
-                        Contas
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <router-link v-for="link in menus" tag="li" :to="{path: link.path}" active-class="active">
-                            <a>{{ link.nome }}</a>
-                        </router-link>
-                    </ul>
-                </div>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="container">
+                <router-link :to="{name: 'lista'}" class="brand-logo">Contas</router-link>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <router-link v-for="link in menus" tag="li" :to="{path: link.path}"  active-class="active">
+                        <a>{{ link.nome }}</a>
+                    </router-link>
+                </ul>
+                <ul id="mobile-demo" class="side-nav">
+                    <router-link v-for="link in menus" tag="li" :to="{path: link.path}"  active-class="active">
+                        <a>{{ link.nome }}</a>
+                    </router-link>
+                </ul>
             </div>
         </div>
     </nav>

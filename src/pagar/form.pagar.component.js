@@ -1,33 +1,37 @@
 window.formPagarComponent = Vue.extend({
     template: `
-<form  class="form-horizontal" @submit.prevent="cadastrar">
-    <div class="form-group">
-        <label for="nome" class="col-md-2 control-label">Vencimento</label>
-        <div class="col-md-5">
-            <input name="vencimento" type="text" class="form-control" v-model="conta.vencimento">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="nome" class="col-md-2 control-label">Nome</label>
-        <div class="col-md-5">
-            <input name="nome" type="text" class="form-control" v-model="conta.nome">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="valor" class="col-md-2 control-label">Valor</label>
-        <div class="col-md-5">
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input name="valor" type="number" min="0" step="0.01" class="form-control" v-model="conta.valor">
+<div class="container">
+    <div class="row">
+        <form  class="col s12" @submit.prevent="cadastrar">
+            <div class="row">
+                <div class="input-field">
+                    <i class="material-icons prefix">event</i>
+                    <input name="vencimento" type="text" class="form-control" v-model="conta.vencimento">
+                    <label for="nome">Vencimento</label>
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="input-field">
+                    <i class="material-icons prefix">receipt</i>
+                    <input name="nome" type="text" class="form-control" v-model="conta.nome">
+                    <label for="nome">Nome</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <i class="material-icons prefix">monetization_on</i>
+                    <label for="valor">Valor</label>
+                    <input name="valor" type="number" min="0" step="0.01" class="form-control" v-model="conta.valor">
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-2">
+                <div class="row">
+                    <button class="btn btn-primary form-control" type="submit">Cadastrar</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="col-md-5 col-md-offset-2">
-        <div class="form-group">
-            <button class="btn btn-primary form-control" type="submit">Cadastrar</button>
-        </div>
-    </div>
-</form>
+</div>
 `,
     data() {
         return {
@@ -45,6 +49,9 @@ window.formPagarComponent = Vue.extend({
             this.getConta(this.$route.params.id);
             this.formType = "update";
         }
+    },
+    updated(){
+        Materialize.updateTextFields();
     },
     methods: {
         cadastrar(){

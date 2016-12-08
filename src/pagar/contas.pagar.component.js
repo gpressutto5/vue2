@@ -4,13 +4,62 @@ window.contasPagarComponent = Vue.extend({
     },
     template: `
 <div>
-    <div class="container" v-cloak>
+    <div id="card-stats" class="container" v-cloak>
         <div class="row">
-            <div class="center-align teal-text text-darken-4">
-                <h1>{{ titulo }}</h1>
-                <h3>{{ status }}</h3>
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-content  green white-text">
+                        <p class="card-stats-title"><i class="fa fa-university"></i> Contas a pagar</p>
+                        <h4 class="card-stats-number">{{ count }}</h4>
+                        </p>
+                    </div>
+                    <div class="card-action  green darken-2">
+                        <a href="#">Adicionar Conta</a>
+                    </div>
+                </div>
             </div>
-            <menu-component></menu-component>
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-content pink lighten-1 white-text">
+                        <p class="card-stats-title"><i class="fa fa-credit-card"></i> Total a pagar</p>
+                        <h4 class="card-stats-number">R$ 124,54</h4>
+                        </p>
+                    </div>
+                    <div class="card-action  pink darken-2">
+                        <a href="#">Ver Lista</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-content blue-grey white-text">
+                        <p class="card-stats-title"><i class="fa fa-money"></i> Contas a receber</p>
+                        <h4 class="card-stats-number">3</h4>
+                        </p>
+                    </div>
+                    <div class="card-action blue-grey darken-2">
+                        <a href="#">Adicionar Conta</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-content purple white-text">
+                        <p class="card-stats-title"><i class="fa fa-gavel"></i> Total a receber</p>
+                        <h4 class="card-stats-number">R$ 990,63</h4>
+                        </p>
+                    </div>
+                    <div class="card-action purple darken-2">
+                        <a href="#">Ver Lista</a>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="center-align pink-text text-darken-1">
+                    <h1>{{ titulo }}</h1>
+                </div>
+                <menu-component></menu-component>
+            </div>-->
         </div>
     </div>
     <router-view></router-view>
@@ -19,7 +68,7 @@ window.contasPagarComponent = Vue.extend({
     data() {
         return {
             titulo: "Contas a pagar",
-            status: ""
+            count: ""
         };
     },
     methods: {
@@ -33,7 +82,7 @@ window.contasPagarComponent = Vue.extend({
                     count++;
                 }
             }
-            this.status = !count ? "Nenhuma conta a pagar." : "Existem " + count + " contas a pagar.";
+            this.count = count;
         },
         updateStatus() {
             instance.get('contasP')

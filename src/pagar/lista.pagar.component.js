@@ -5,7 +5,7 @@ window.listaPagarComponent = Vue.extend({
         <div class="row">
             <div class="row">
                 <h3 v-show="!contas.length" class="text-info text-center">Não há contas</h3>
-                <table class="highlight" v-show="contas.length">
+                <table class="highlight z-depth-5" v-show="contas.length">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -22,16 +22,14 @@ window.listaPagarComponent = Vue.extend({
                             <td>{{ conta.vencimento }}</td>
                             <td>{{ conta.nome }}</td>
                             <td>{{ conta.valor | numero }}</td>
-                            <td><span class="text-darken-2" :class="{ 'green-text': conta.pago, 'red-text': !conta.pago }">{{ conta.pago | status }}</span></td>
+                            <td><span class="text-darken-1" :class="{ 'green-text': conta.pago, 'red-text': !conta.pago }">{{ conta.pago | status }}</span></td>
                             <td>
                                 <ul :id="'dropdown'+index" class="dropdown-content">
-                                    <li><router-link :to="{name: 'update', params: {id: conta.id}}"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
-                                    <li><a href="#" @click.prevent="pagarConta(conta)"><i class="fa fa-fw fa-money" aria-hidden="true"></i> {{ conta.pago ? 'Não foi pago':'Pagar' }}</a></li>
-                                    <li><a href="#" @click.prevent="removerConta(index, conta)"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Remover</a></li>
+                                    <li><router-link :to="{name: 'update', params: {id: conta.id}}" class="pink-text"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
+                                    <li><a href="#" @click.prevent="pagarConta(conta)" class="pink-text"><i class="fa fa-fw fa-money" aria-hidden="true"></i> {{ conta.pago ? 'Não foi pago':'Pagar' }}</a></li>
+                                    <li><a href="#" @click.prevent="removerConta(index, conta)" class="pink-text"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Remover</a></li>
                                 </ul>
-                                <a href="#" class="dropdown-button btn" :data-activates="'dropdown'+index">
-                                    Ações
-                                </a>
+                                <a class="dropdown-button btn pink waves-effect waves-light" :data-activates="'dropdown'+index">Ações</a>
                             </td>
                         </tr>
                     </tbody>
@@ -56,7 +54,7 @@ window.listaPagarComponent = Vue.extend({
     updated() {
         $(".dropdown-button").dropdown({
             constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: true, // Activate on hover
+            hover: false, // Activate on hover
             belowOrigin: true, // Displays dropdown below the button
             alignment: 'right' // Displays dropdown with edge aligned to the left of button
         });

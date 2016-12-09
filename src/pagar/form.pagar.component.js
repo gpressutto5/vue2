@@ -92,11 +92,31 @@ window.formPagarComponent = Vue.extend({
             this.conta.vencimento = $("input[name=vencimento]").val();
             if (this.formType == "insert"){
                 instance.post('contasP', this.conta).then((response) => {
-                    this.$router.push({name: "lista"});
+                    this.$router.push({name: "lista"}).catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else {
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
+                        Materialize.toast('Falha ao salvar os dados, tente novamente mais tarde.', 4000);
+                    });
                 });
             } else {
                 instance.put('contasP/'+this.conta.id, this.conta).then((response) => {
-                    this.$router.push({name: "lista"});
+                    this.$router.push({name: "lista"}).catch((error) => {
+                        if (error.response) {
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else {
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
+                        Materialize.toast('Falha ao salvar os dados, tente novamente mais tarde.', 4000);
+                    });
                 });
             }
         },
@@ -107,7 +127,17 @@ window.formPagarComponent = Vue.extend({
                     if (this.picker){
                         this.picker.set('select', this.conta.vencimento, { format: 'dd/mm/yyyy' });
                     }
-                });
+                }).catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+                Materialize.toast('Falha ao carregar os dados, tente novamente mais tarde.', 4000);
+            });
         }
     }
 });

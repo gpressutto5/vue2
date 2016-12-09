@@ -9,9 +9,11 @@ window.topoComponent = Vue.extend({
                     <h4 class="card-stats-number">{{ count.pagar }}</h4>
                     </p>
                 </div>
-                <div class="card-action  green darken-2">
-                    <router-link :to="{name: 'form'}">Adicionar Conta</router-link>
-                </div>
+                <router-link :to="{name: 'form'}">
+                    <div class="waves-effect waves-block card-action  green darken-2">
+                        <a>Adicionar Conta</a>
+                    </div>
+                </router-link>
             </div>
         </div>
         <div class="col s12 m6 l3">
@@ -21,9 +23,11 @@ window.topoComponent = Vue.extend({
                     <h4 class="card-stats-number">{{ total.pagar | numero }}</h4>
                     </p>
                 </div>
-                <div class="card-action  pink darken-2">
-                    <router-link :to="{name: 'lista'}">Ver Lista</router-link>
-                </div>
+                <router-link :to="{name: 'lista'}">
+                    <div class="waves-effect waves-block card-action  pink darken-2">
+                        <a>Ver Lista</a>
+                    </div>
+                </router-link>
             </div>
         </div>
         <div class="col s12 m6 l3">
@@ -33,9 +37,11 @@ window.topoComponent = Vue.extend({
                     <h4 class="card-stats-number">{{ count.receber }}</h4>
                     </p>
                 </div>
-                <div class="card-action blue-grey darken-2">
-                    <router-link :to="{name: 'formR'}">Adicionar Conta</router-link>
-                </div>
+                <router-link :to="{name: 'formR'}">
+                    <div class="waves-effect waves-block card-action blue-grey darken-2">
+                        <a>Adicionar Conta</a>
+                    </div>
+                </router-link>
             </div>
         </div>
         <div class="col s12 m6 l3">
@@ -45,9 +51,11 @@ window.topoComponent = Vue.extend({
                     <h4 class="card-stats-number">{{ total.receber | numero }}</h4>
                     </p>
                 </div>
-                <div class="card-action purple darken-2">
-                    <router-link :to="{name: 'listaR'}">Ver Lista</router-link>
-                </div>
+                <router-link :to="{name: 'listaR'}">
+                    <div class="waves-effect waves-block card-action purple darken-2">
+                        <a>Ver Lista</a>
+                    </div>
+                </router-link>
             </div>
         </div>
         <!--<div class="row">
@@ -93,22 +101,30 @@ window.topoComponent = Vue.extend({
             }
         },
         updateStatus() {
-            instance.get('contasP')
-                .then((response) => {
-                    this.calcularStatus(response.data, 'p');
-                });
-            instance.get('contasR')
-                .then((response) => {
-                    this.calcularStatus(response.data, 'r');
-                });
-            instance.get('contasP/total')
-                .then((response) => {
-                    this.total.pagar = response.data.total;
-                });
-            instance.get('contasR/total')
-                .then((response) => {
-                    this.total.receber = response.data.total;
-                });
+            axios.all([
+                instance.get('contasP'),
+                instance.get('contasR'),
+                instance.get('contasP/total'),
+                instance.get('contasR/total')
+            ]).then(axios.spread((calcp, calcr, totalp, totalr) => {
+                this.calcularStatus(calcp.data, 'p');
+                this.calcularStatus(calcr.data, 'r');
+                this.total.pagar = totalp.data.total;
+                this.total.receber = totalr.data.total;
+            })).catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+                Materialize.toast('Falha ao carregar os dados, tente novamente mais tarde.', 4000);
+            });
+        },
+        methods: {
+
         }
     }
 

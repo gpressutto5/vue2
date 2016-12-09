@@ -46,8 +46,18 @@ window.listaReceberComponent = Vue.extend({
         instance.get('contasR')
             .then((response) => {
                 this.contas = response.data;
-            });
-        this.$parent.$children[0].updateStatus();
+                this.$parent.$children[0].updateStatus();
+            }).catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+            Materialize.toast('Falha ao carregar os dados, tente novamente mais tarde.', 4000);
+        });
     },
     updated() {
         $(".dropdown-button").dropdown({
@@ -62,6 +72,16 @@ window.listaReceberComponent = Vue.extend({
             instance.put('receber/'+conta.id).then((response) => {
                 conta.pago = !conta.pago;
                 this.$parent.$children[0].updateStatus();
+            }).catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+                Materialize.toast('Falha ao pagar a conta, tente novamente mais tarde.', 4000);
             });
         },
         removerConta(index, conta) {
@@ -69,6 +89,16 @@ window.listaReceberComponent = Vue.extend({
                 instance.delete('contasR/'+conta.id).then((response) => {
                     this.contas.splice(index, 1);
                     this.$parent.$children[0].updateStatus();
+                }).catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                    Materialize.toast('Falha ao excluir a conta, tente novamente mais tarde.', 4000);
                 });
             }
         }

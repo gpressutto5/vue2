@@ -5,7 +5,8 @@
   "repository": " ",
   "main": "index.js",
   "scripts": {
-    "babel": "babel src --out-dir dist --watch"
+    "babel": "babel src --out-dir dist --watch",
+    "start": "concurrently \"npm run babel\" \"lite-server\" \"cd ../vue-bills-api && php -S localhost:80\""
   },
   "author": "",
   "license": "ISC",

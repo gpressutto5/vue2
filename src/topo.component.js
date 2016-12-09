@@ -1,9 +1,9 @@
 window.topoComponent = Vue.extend({
     template: `
-<div id="card-stats" class="container" v-cloak>
+<div id="card-stats" class="container" :class="this.$route.name == 'dashboard'?'':'hide-on-small-only'" v-cloak>
     <div class="row">
         <div class="col s12 m6 l3">
-            <div class="card">
+            <div class="card z-depth-5">
                 <div class="card-content  green white-text">
                     <p class="card-stats-title"><i class="fa fa-university"></i> Contas a pagar</p>
                     <h4 class="card-stats-number">{{ count.pagar }}</h4>
@@ -15,7 +15,7 @@ window.topoComponent = Vue.extend({
             </div>
         </div>
         <div class="col s12 m6 l3">
-            <div class="card">
+            <div class="card z-depth-5">
                 <div class="card-content pink lighten-1 white-text">
                     <p class="card-stats-title"><i class="fa fa-credit-card"></i> Total a pagar</p>
                     <h4 class="card-stats-number">{{ total.pagar | numero }}</h4>
@@ -27,7 +27,7 @@ window.topoComponent = Vue.extend({
             </div>
         </div>
         <div class="col s12 m6 l3">
-            <div class="card">
+            <div class="card z-depth-5">
                 <div class="card-content blue-grey white-text">
                     <p class="card-stats-title"><i class="fa fa-money"></i> Contas a receber</p>
                     <h4 class="card-stats-number">{{ count.receber }}</h4>
@@ -39,7 +39,7 @@ window.topoComponent = Vue.extend({
             </div>
         </div>
         <div class="col s12 m6 l3">
-            <div class="card">
+            <div class="card z-depth-5">
                 <div class="card-content purple white-text">
                     <p class="card-stats-title"><i class="fa fa-gavel"></i> Total a receber</p>
                     <h4 class="card-stats-number">{{ total.receber | numero }}</h4>

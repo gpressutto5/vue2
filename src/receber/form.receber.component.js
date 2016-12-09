@@ -1,33 +1,44 @@
 window.formReceberComponent = Vue.extend({
     template: `
-<form  class="form-horizontal" @submit.prevent="cadastrar">
-    <div class="form-group">
-        <label for="nome" class="col-md-2 control-label">Vencimento</label>
-        <div class="col-md-5">
-            <input name="vencimento" type="text" class="form-control" v-model="conta.vencimento">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="nome" class="col-md-2 control-label">Nome</label>
-        <div class="col-md-5">
-            <input name="nome" type="text" class="form-control" v-model="conta.nome">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="valor" class="col-md-2 control-label">Valor</label>
-        <div class="col-md-5">
-            <div class="input-group">
-                <span class="input-group-addon">R$</span>
-                <input name="valor" type="number" min="0" step="0.01" class="form-control" v-model="conta.valor">
+<div class="container">
+    <div class="row">
+        <div class="col s12 m10 offset-m1">
+            <div class="card-panel z-depth-5">
+                <div class="row">
+                    <h4 class="center">Adicionar nova conta</h4>
+                    <form  class="col s12" @submit.prevent="cadastrar">
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">event</i>
+                                <input id="vencimento" name="vencimento" type="text" class="datepicker">
+                                <label for="vencimento">Vencimento</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">receipt</i>
+                                <input id="nome" name="nome" type="text" v-model="conta.nome">
+                                <label for="nome">Nome</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">monetization_on</i>
+                                <label id="valor" for="valor">Valor</label>
+                                <input name="valor" type="number" min="0" step="0.01" v-model="conta.valor">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-md-offset-2">
+                            <div class="row">
+                                <button class="btn-large right" type="submit">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-5 col-md-offset-2">
-        <div class="form-group">
-            <button class="btn btn-primary form-control" type="submit">Cadastrar</button>
-        </div>
-    </div>
-</form>
+</div>
 `,
     data() {
         return {
@@ -37,7 +48,8 @@ window.formReceberComponent = Vue.extend({
                 nome: '',
                 valor: 0,
                 pago: 0
-            }
+            },
+            picker: false
         }
     },
     created(){
@@ -46,8 +58,38 @@ window.formReceberComponent = Vue.extend({
             this.formType = "update";
         }
     },
+    mounted(){
+        let $input = $('.datepicker').pickadate({
+            monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+            weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+            today: 'Hoje',
+            clear: 'Limpar',
+            close: 'Pronto',
+            labelMonthNext: 'Próximo mês',
+            labelMonthPrev: 'Mês anterior',
+            labelMonthSelect: 'Selecione um mês',
+            labelYearSelect: 'Selecione um ano',
+            selectMonths: true,
+            selectYears: 15,
+            format: 'Você selecionou: dddd, dd !de mmmm !de yyyy',
+            formatSubmit: 'dd/mm/yyyy',
+            hiddenName: true
+        });
+        this.picker = $input.pickadate('picker');
+        $(function() {
+            Materialize.updateTextFields();
+        });
+    },
+    updated(){
+        $(function() {
+            Materialize.updateTextFields();
+        });
+    },
     methods: {
         cadastrar(){
+            this.conta.vencimento = $("input[name=vencimento]").val();
             if (this.formType == "insert"){
                 instance.post('contasR', this.conta).then((response) => {
                     this.$router.push({name: "listaR"});
@@ -62,6 +104,9 @@ window.formReceberComponent = Vue.extend({
             instance.get('contasR/'+id)
                 .then((response) => {
                     this.conta = response.data;
+                    if (this.picker){
+                        this.picker.set('select', this.conta.vencimento, { format: 'dd/mm/yyyy' });
+                    }
                 });
         }
     }

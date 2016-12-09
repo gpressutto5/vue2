@@ -2,34 +2,41 @@ window.formPagarComponent = Vue.extend({
     template: `
 <div class="container">
     <div class="row">
-        <form  class="col s12" @submit.prevent="cadastrar">
-            <div class="row">
-                <div class="input-field">
-                    <i class="material-icons prefix">event</i>
-                    <input id="vencimento" name="vencimento" type="text" class="datepicker">
-                    <label for="vencimento">Vencimento</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field">
-                    <i class="material-icons prefix">receipt</i>
-                    <input id="nome" name="nome" type="text" v-model="conta.nome">
-                    <label for="nome">Nome</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field">
-                    <i class="material-icons prefix">monetization_on</i>
-                    <label id="valor" for="valor">Valor</label>
-                    <input name="valor" type="number" min="0" step="0.01" v-model="conta.valor">
-                </div>
-            </div>
-            <div class="col-md-5 col-md-offset-2">
+        <div class="col s12 m10 offset-m1">
+            <div class="card-panel z-depth-5">
                 <div class="row">
-                    <button class="btn btn-primary form-control" type="submit">Cadastrar</button>
+                    <h4 class="center">Adicionar nova conta</h4>
+                    <form  class="col s12" @submit.prevent="cadastrar">
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">event</i>
+                                <input id="vencimento" name="vencimento" type="text" class="datepicker">
+                                <label for="vencimento">Vencimento</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">receipt</i>
+                                <input id="nome" name="nome" type="text" v-model="conta.nome">
+                                <label for="nome">Nome</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">monetization_on</i>
+                                <label id="valor" for="valor">Valor</label>
+                                <input name="valor" type="number" min="0" step="0.01" v-model="conta.valor">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-md-offset-2">
+                            <div class="row">
+                                <button class="btn-large right" type="submit">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 `,

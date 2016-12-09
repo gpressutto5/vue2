@@ -20,7 +20,7 @@ window.dashboardComponent = Vue.extend({
                 <div class="card">
                     <div class="card-content red white-text">
                         <h5>Saldo Total</h5>
-                        <h3>{{ total | numero }}</h4>
+                        <h3>{{ total < 0 ? '-':'' }} {{ total | numero }}</h4>
                         </p>
                     </div>
                 </div>

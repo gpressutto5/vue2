@@ -6,22 +6,22 @@ window.formPagarComponent = Vue.extend({
             <div class="row">
                 <div class="input-field">
                     <i class="material-icons prefix">event</i>
-                    <input name="vencimento" type="text" class="form-control" v-model="conta.vencimento">
-                    <label for="nome">Vencimento</label>
+                    <input id="vencimento" name="vencimento" type="text" class="datepicker">
+                    <label for="vencimento">Vencimento</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field">
                     <i class="material-icons prefix">receipt</i>
-                    <input name="nome" type="text" class="form-control" v-model="conta.nome">
+                    <input id="nome" name="nome" type="text" v-model="conta.nome">
                     <label for="nome">Nome</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field">
                     <i class="material-icons prefix">monetization_on</i>
-                    <label for="valor">Valor</label>
-                    <input name="valor" type="number" min="0" step="0.01" class="form-control" v-model="conta.valor">
+                    <label id="valor" for="valor">Valor</label>
+                    <input name="valor" type="number" min="0" step="0.01" v-model="conta.valor">
                 </div>
             </div>
             <div class="col-md-5 col-md-offset-2">
@@ -41,7 +41,8 @@ window.formPagarComponent = Vue.extend({
                 nome: '',
                 valor: 0,
                 pago: 0
-            }
+            },
+            picker: false
         }
     },
     created(){
@@ -50,11 +51,38 @@ window.formPagarComponent = Vue.extend({
             this.formType = "update";
         }
     },
+    mounted(){
+        let $input = $('.datepicker').pickadate({
+            monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+            weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+            today: 'Hoje',
+            clear: 'Limpar',
+            close: 'Pronto',
+            labelMonthNext: 'Próximo mês',
+            labelMonthPrev: 'Mês anterior',
+            labelMonthSelect: 'Selecione um mês',
+            labelYearSelect: 'Selecione um ano',
+            selectMonths: true,
+            selectYears: 15,
+            format: 'Você selecionou: dddd, dd !de mmmm !de yyyy',
+            formatSubmit: 'dd/mm/yyyy',
+            hiddenName: true
+        });
+        this.picker = $input.pickadate('picker');
+        $(function() {
+            Materialize.updateTextFields();
+        });
+    },
     updated(){
-        Materialize.updateTextFields();
+        $(function() {
+            Materialize.updateTextFields();
+        });
     },
     methods: {
         cadastrar(){
+            this.conta.vencimento = $("input[name=vencimento]").val();
             if (this.formType == "insert"){
                 instance.post('contasP', this.conta).then((response) => {
                     this.$router.push({name: "lista"});
@@ -69,6 +97,9 @@ window.formPagarComponent = Vue.extend({
             instance.get('contasP/'+id)
                 .then((response) => {
                     this.conta = response.data;
+                    if (this.picker){
+                        this.picker.set('select', this.conta.vencimento, { format: 'dd/mm/yyyy' });
+                    }
                 });
         }
     }

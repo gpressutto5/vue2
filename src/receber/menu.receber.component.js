@@ -6,7 +6,7 @@ window.menuReceberComponent = Vue.extend({
     </router-link>
 </ul>
 `,
-    data: function(){
+    data(){
         return {
             menus: [
                 {id: 0, nome: "Listar contas", name: "listaR"},

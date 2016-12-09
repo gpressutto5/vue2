@@ -1,4 +1,4 @@
-window.listaPagarComponent = Vue.extend({
+window.listaReceberComponent = Vue.extend({
     template: `
 <div>
     <h3 v-show="!contas.length" class="text-info text-center">Não há contas</h3>
@@ -18,7 +18,7 @@ window.listaPagarComponent = Vue.extend({
                 <td>{{ index + 1 }}</td>
                 <td>{{ conta.vencimento }}</td>
                 <td>{{ conta.nome }}</td>
-                <td>{{ 'R$ ' + conta.valor.toFixed(2) }}</td>
+                <td>{{ conta.valor | numero }}</td>
                 <td><span class="label" :class="{ 'label-success': conta.pago, 'label-danger': !conta.pago }">{{ conta.pago | status }}</span></td>
                 <td>
                     <div class="dropdown">
@@ -27,7 +27,7 @@ window.listaPagarComponent = Vue.extend({
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><router-link :to="{name: 'update', params: {id: conta.id}}"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
+                            <li><router-link :to="{name: 'updateR', params: {id: conta.id}}"><i class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></i> Editar</router-link></li>
                             <li><a href="#" @click.prevent="pagarConta(conta)"><i class="fa fa-fw fa-money" aria-hidden="true"></i> {{ conta.pago ? 'Não foi pago':'Pagar' }}</a></li>
                             <li><a href="#" @click.prevent="removerConta(index, conta)"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Remover</a></li>
                         </ul>
@@ -38,28 +38,28 @@ window.listaPagarComponent = Vue.extend({
     </table>
 </div>
     `,
-    data: function(){
+    data(){
         return {
             contas: []
-        };
+        }
     },
-    beforeMount: function() {
-        instance.get('contasP')
+    beforeMount() {
+        instance.get('contasR')
             .then((response) => {
-                 this.contas = response.data;
+                this.contas = response.data;
             });
         this.$parent.updateStatus();
     },
     methods: {
-        pagarConta: function (conta) {
-            instance.put('pagar/'+conta.id).then((response) => {
+        pagarConta(conta) {
+            instance.put('receber/'+conta.id).then((response) => {
                 conta.pago = !conta.pago;
                 this.$parent.updateStatus();
             });
         },
-        removerConta: function (index, conta) {
+        removerConta(index, conta) {
             if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
-                instance.delete('contasP/'+conta.id).then((response) => {
+                instance.delete('contasR/'+conta.id).then((response) => {
                     this.contas.splice(index, 1);
                     this.$parent.updateStatus();
                 });

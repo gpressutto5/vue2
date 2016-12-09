@@ -29,7 +29,7 @@ window.formReceberComponent = Vue.extend({
     </div>
 </form>
 `,
-    data: function () {
+    data() {
         return {
             formType: "insert",
             conta: {
@@ -40,14 +40,14 @@ window.formReceberComponent = Vue.extend({
             }
         }
     },
-    created: function(){
+    created(){
         if (this.$route.name == "updateR") {
             this.getConta(this.$route.params.id);
             this.formType = "update";
         }
     },
     methods: {
-        cadastrar: function(){
+        cadastrar(){
             if (this.formType == "insert"){
                 instance.post('contasR', this.conta).then((response) => {
                     this.$router.push({name: "listaR"});
@@ -58,7 +58,7 @@ window.formReceberComponent = Vue.extend({
                 });
             }
         },
-        getConta: function (id) {
+        getConta(id) {
             instance.get('contasR/'+id)
                 .then((response) => {
                     this.conta = response.data;

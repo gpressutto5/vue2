@@ -1,6 +1,6 @@
-window.contasReceberComponent = Vue.extend({
+window.contasPagarComponent = Vue.extend({
     components: {
-        'menu-component': menuReceberComponent
+        'menu-component': menuPagarComponent
     },
     template: `
 <div>
@@ -22,27 +22,27 @@ window.contasReceberComponent = Vue.extend({
     </div>
 </div>
     `,
-    data: function() {
+    data() {
         return {
-            titulo: "Contas a receber",
+            titulo: "Contas a pagar",
             status: ""
         };
     },
     methods: {
-        calcularStatus: function (contas) {
+        calcularStatus(contas) {
             if (!contas.length){
                 status = "Nenhuma conta a pagar.";
             }
-            var count = 0;
-            for(var i in contas){
+            let count = 0;
+            for(let i in contas){
                 if (!contas[i].pago) {
                     count++;
                 }
             }
-            this.status = !count ? "Nenhuma conta a receber." : "Existem " + count + " contas a receber.";
+            this.status = !count ? "Nenhuma conta a pagar." : "Existem " + count + " contas a pagar.";
         },
-        updateStatus: function () {
-            instance.get('contasR')
+        updateStatus() {
+            instance.get('contasP')
                 .then((response) => {
                     this.calcularStatus(response.data);
                 });

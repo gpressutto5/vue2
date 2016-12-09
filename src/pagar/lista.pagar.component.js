@@ -49,7 +49,7 @@ window.listaPagarComponent = Vue.extend({
             .then((response) => {
                 this.contas = response.data;
             });
-        this.$parent.updateStatus();
+        this.$parent.$children[0].updateStatus();
     },
     updated() {
         $(".dropdown-button").dropdown({
@@ -63,14 +63,14 @@ window.listaPagarComponent = Vue.extend({
         pagarConta(conta) {
             instance.put('pagar/' + conta.id).then((response) => {
                 conta.pago = !conta.pago;
-                this.$parent.updateStatus();
+                this.$parent.$children[0].updateStatus();
             });
         },
         removerConta(index, conta) {
             if (confirm("Tem certeza que deseja apagar " + conta.nome + "?")) {
                 instance.delete('contasP/' + conta.id).then((response) => {
                     this.contas.splice(index, 1);
-                    this.$parent.updateStatus();
+                    this.$parent.$children[0].updateStatus();
                 });
             }
         }
